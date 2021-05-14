@@ -1,0 +1,48 @@
+{
+  "name": "takeo",
+  "version": "1.0.0",
+  "description": "NodeJS package that make remote resource request similar to Django ORM.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://chhanhtrao@github.com/chhanhtrao/takeo.git"
+  },
+  "keywords": [
+    "chomka",
+    "http",
+    "request",
+    "cambodia",
+    "takeo",
+    "khmer",
+    "konkhmer",
+    "trao",
+    "chhanh",
+    "snakeeyes",
+    "commander"
+  ],
+  "author": "chhtrao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chhanhtrao/takeo/issues"
+  },
+  "homepage": "https://github.com/chhanhtrao/takeo#readme",
+  "dependencies": {
+    "axios": "^0.21.1"
+  },
+  "devDependencies": {
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@types/axios": "^0.14.0",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "eslint": "^7.26.0",
+    "typescript": "^4.2.4"
+  }
+}
