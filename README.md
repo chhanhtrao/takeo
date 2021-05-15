@@ -152,7 +152,7 @@ http
 
   ```typescript
   newUser.email = 'new.email@example.com';
-  newUser?.save().then((updatedUser) => {
+  newUser.save().then((updatedUser) => {
     console.log('Updated', updatedUser);
     // updatedUser is a Model(User) object.
   });
@@ -162,7 +162,7 @@ http
 
   ```typescript
   newUser
-    ?.delete()
+    .delete()
     .then((result: any) => {
       console.log('Deleted user');
     })
