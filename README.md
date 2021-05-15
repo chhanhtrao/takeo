@@ -91,6 +91,7 @@ http
 - Configuration
 
   ```typescript
+  // The configuration will effect gobally
   request.Http.defaultConfig = {
     baseURL: 'https://reqres.in/api',
     header: {
