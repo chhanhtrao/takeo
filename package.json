@@ -1,6 +1,6 @@
 {
   "name": "takeo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NodeJS package that make remote resource request similar to Django ORM.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,7 +29,7 @@
     "commander"
   ],
   "author": "chhtrao",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/chhanhtrao/takeo/issues"
   },
