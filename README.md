@@ -4,7 +4,7 @@ A package that make remote resource request and map resource to Model object.
 
 ## 1. Installation
 
-`npm install takeo ` or `yarn install takeo`
+`npm install takeo` or `yarn install takeo`
 
 ## 2. Usage
 
