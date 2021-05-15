@@ -1,7 +1,7 @@
 {
   "name": "takeo",
-  "version": "1.0.1",
-  "description": "NodeJS package that make remote resource request similar to Django ORM.",
+  "version": "1.0.1a",
+  "description": "A package that make remote resource request and map resource to Model object.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
