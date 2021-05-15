@@ -2,11 +2,11 @@
 
 A package that make remote resource request and map resource to Model object.
 
-## 1. Installation
+# 1. Installation
 
 `npm install takeo` or `yarn install takeo`
 
-## 2. Usage
+# 2. Usage
 
 #### 2-1. Import
 
@@ -182,3 +182,65 @@ http
       console.log('Count user error', error);
     });
   ```
+
+# 3. Advance Usage
+
+#### 3-1. Using your own Manager class
+
+- Create a file `UserManager.ts`
+
+  ```typescript
+  import {models} from 'takeo';
+
+  export class UserManager extends models.Manager {
+    // Override this method to transform response data to Model object
+    protected transformResponseToObject(responseData: any) {
+      const resData = JSON.parse(responseData);
+      return new this.model(resData.data);
+    }
+
+    // Override this method to transform response data to list of Model objects
+    protected transformResponseToList(responseData: any) {
+      return super.transformResponseToList(responseData);
+    }
+
+    public myFunction() {
+      // Your code here.
+    }
+  }
+  ```
+
+- Using `UserManager` as instead of default Manager class within your model class - `User.ts`
+
+  ```typescript
+  import {UserManager} from './UserManager';
+
+  export class User extends models.Model {
+    public static objects: UserManager = new UserManager(User);
+    public static fields: string[] = ['id', 'email', 'first_name', 'last_name', 'avatar']
+    ...
+    protected getManager(): any {
+        return User.objects;
+    }
+    ...
+  }
+  ```
+
+- Calling a custom function of your `MyManager`
+  ```typescript
+  User.objects.myFunction();
+  ```
+
+#### 3-2. Custom request config
+
+```typescript
+const user = await User.objects.filter(
+  {email: 'email@example.com'},
+  {
+    url: 'custom-url-here',
+    header: {
+      // custom-header-here
+    },
+  },
+);
+```

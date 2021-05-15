@@ -1,6 +1,6 @@
 {
   "name": "takeo",
-  "version": "1.0.1a",
+  "version": "1.0.3",
   "description": "A package that make remote resource request and map resource to Model object.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

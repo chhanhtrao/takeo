@@ -21,6 +21,10 @@ export class ResultSet<T> extends Array<T> {
     return retVal;
   };
 
+  public exists: () => boolean = () => {
+    return this.length > 0;
+  };
+
   public setResponseData: (data: any) => void = (data: any) => {
     this.__responseData__ = data;
   };
