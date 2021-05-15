@@ -101,24 +101,84 @@ http
   };
   ```
 
-- Fetch data
+- Fetch data(list)
 
   ```typescript
   User.objects
     .filter({first_name: 'Lindsay', last_name: 'Ferguson'})
-    .then((results: models.ResultSet<any>) => {
-      console.log('Fetch users success', results);
-      // results is a list of User Model object.
+    .then((resultSet: models.ResultSet<any>) => {
+      console.log('Fetch users success', resultSet);
+      // resultSet is a list of User Model objects.
     })
     .catch((error) => {
       console.log('Error fetch users', error);
     });
   ```
 
-  The above line will make a request to '{baseURL}/{model_name}s/' (https://reqres.in/api/users/). This URL is configureable by overiding a method in User Model class as bellow:
+  The above line will make a request to '`{baseURL}/{model_name}s/`' (https://reqres.in/api/users/). This URL is configureable by overiding a method in `User Model` class as bellow:
 
   ```typescript
     public static getResourceURL(): any {
       return 'custom/url/here'; // ex: '/api/profile' or 'https://example.com/api/profile'
     }
+  ```
+
+- Fetch data(signle resource)
+
+  ```typescript
+  User.objects
+    .get({id: 7})
+    .then((user) => {
+      console.log('Get user', user); // user is a Model(User) object.
+    })
+    .catch((error) => {
+      console.log('Get user error', error);
+    });
+  ```
+
+- POST to create a signle resource
+
+  ```typescript
+  newUser = await User.objects.create({
+    email: 'lindsay.ferguson@reqres.in',
+    first_name: 'Lindsay',
+    last_name: 'Ferguson',
+    avatar: 'https://reqres.in/img/faces/8-image.jpg',
+  });
+  // newUser is a Model(User) object.
+  ```
+
+- PUT to update a signle resource
+
+  ```typescript
+  newUser.email = 'new.email@example.com';
+  newUser?.save().then((updatedUser) => {
+    console.log('Updated', updatedUser);
+    // updatedUser is a Model(User) object.
+  });
+  ```
+
+- DELETE a singole resource
+
+  ```typescript
+  newUser
+    ?.delete()
+    .then((result: any) => {
+      console.log('Deleted user');
+    })
+    .catch((error: any) => {
+      console.log('Delete user error', error);
+    });
+  ```
+
+- GET count resource
+  ```typescript
+  User.objects
+    .count()
+    .then((result: any) => {
+      console.log('User count', result);
+    })
+    .catch((error: any) => {
+      console.log('Count user error', error);
+    });
   ```
