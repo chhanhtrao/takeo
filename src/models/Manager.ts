@@ -15,6 +15,10 @@ export class Manager {
     let results: any[] = [];
     try {
       const data = JSON.parse(responseData);
+      if (Array.isArray(data) === true) {
+        return ResultSet.defaultClass.getInstance(data, this.model, data);
+      }
+
       for (let key in data || {}) {
         results = data[key];
         if (Array.isArray(results) === true) {

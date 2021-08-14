@@ -58,7 +58,7 @@ export default class Http {
         console.info(
           `${config.method} ${response.status} "${
             config.url.indexOf('://') < 0
-              ? config?.baseURL || this.config?.baseURL
+              ? config?.baseURL || this.config?.baseURL || ''
               : ''
           }${config.url}"`,
         );
@@ -67,7 +67,7 @@ export default class Http {
         console.error(
           `${config.method} ${err.response.status} "${
             config.url.indexOf('://') < 0
-              ? config?.baseURL || this.config?.baseURL
+              ? config?.baseURL || this.config?.baseURL || ''
               : ''
           }${config.url}"`,
         );
