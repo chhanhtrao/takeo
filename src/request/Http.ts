@@ -41,11 +41,9 @@ export default class Http {
 
   public request(config?: any): Promise<number> {
     let params = config?.params || {};
+    let urlParams: string | null = null;
     if (Object.keys(params).length > 0) {
-      const urlParams: string = this.toURLParams(params);
-      config.url = `${config.url}${
-        config.url.indexOf('?') < 0 ? '?' : '&'
-      }${urlParams}`;
+      urlParams = `?${this.toURLParams(params)}`;
     }
 
     return new Promise(async (resolve, reject) => {
@@ -60,7 +58,7 @@ export default class Http {
             config.url.indexOf('://') < 0
               ? config?.baseURL || this.config?.baseURL || ''
               : ''
-          }${config.url}"`,
+          }${config.url}${urlParams || ''}"`,
         );
       } catch (err) {
         reject(err);

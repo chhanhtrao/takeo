@@ -1,6 +1,6 @@
 {
   "name": "takeo",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A package that make remote resource request and map resource to Model object.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,9 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "totgz": "npm pack",
+    "topublish": "npm publish"
   },
   "repository": {
     "type": "git",
