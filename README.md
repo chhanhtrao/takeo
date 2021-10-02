@@ -87,7 +87,7 @@ http
   The above line will make a request to '`{baseURL}/{model_name}s/`' (https://jsonplaceholder.typicode.com/users/). This URL is configureable by overiding a method in `User Model` class as bellow:
 
   ```javascript
-    public static getResourceURL(): any {
+    static getResourceURL(): any {
       return 'custom/url/here'; // ex: '/api/profile' or 'https://example.com/api/profile'
     }
   ```
