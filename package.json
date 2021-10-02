@@ -1,6 +1,6 @@
 {
   "name": "takeo",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A package that make remote resource request and map resource to Model object.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -40,14 +40,14 @@
   },
   "homepage": "https://github.com/chhanhtrao/takeo#readme",
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.21.4"
   },
   "devDependencies": {
-    "@react-native-community/eslint-config": "^2.0.0",
+    "@react-native-community/eslint-config": "^3.0.1",
     "@types/axios": "^0.14.0",
-    "@typescript-eslint/eslint-plugin": "^4.23.0",
-    "@typescript-eslint/parser": "^4.23.0",
-    "eslint": "^7.26.0",
-    "typescript": "^4.2.4"
+    "@typescript-eslint/eslint-plugin": "^4.31.2",
+    "@typescript-eslint/parser": "^4.31.2",
+    "eslint": "^7.32.0",
+    "typescript": "^4.4.3"
   }
 }

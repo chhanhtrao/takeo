@@ -39,10 +39,10 @@ export class Manager {
 
   protected transformResponseToObject(responseData: any) {
     try {
-      return JSON.parse(responseData);
+      return new this.model(JSON.parse(responseData));
     } catch (error) {
       console.error(error);
-      return responseData;
+      return new this.model(responseData);
     }
   }
 

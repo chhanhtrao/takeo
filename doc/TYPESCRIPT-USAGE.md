@@ -6,29 +6,27 @@ A package that make remote resource request and map resource to Model object.
 
 `npm install takeo` or `yarn install takeo`
 
-# 2. [Using with typescript](https://github.com/chhanhtrao/takeo/blob/main/doc/TYPESCRIPT-USAGE.md)
-
-# 3. Using with javascript
+# 2. Usage
 
 #### 2-1. Import
 
-```javascript
+```typescript
 import {request, models} from 'takeo';
 ```
 
 #### 2-2. Making a simple request
 
-```javascript
+```typescript
 const http = new request.Http();
 http
   .request({
-    url: 'https://jsonplaceholder.typicode.com/Users',
+    url: 'https://reqres.in/api/users',
     method: request.Http.GET, // Methods .GET | .POST | .PUT  | .DELETE | .PATCH
-    // params: { id: 1 }, // This params will transform to querystring parameter
+    params: {page: 3}, // This params will transform to querystring parameter
     data: {}, // POST data
   })
   .then((response) => {
-    setPostList(response.data);
+    // console.log('response', response.data);
   })
   .catch((error) => {
     // console.log('error', error)
@@ -37,32 +35,65 @@ http
 
 #### 2-3. Making request throught Model class
 
-- Create a Model class represent to remote resource.(User.js)
+- Create a Model class represent to remote resource.(User.ts)
 
-  ```javascript
+  ```typescript
   import {models} from 'takeo';
 
   export class User extends models.Model {
-    static objects = new models.Manager(User);
-    static fields = ['id', 'name', 'username', 'email'];
+    public static objects: models.Manager = new models.Manager(User); // "objects" must declear in every sub class of Model.
+    public static fields: string[] = [
+      'id',
+      'email',
+      'first_name',
+      'last_name',
+      'avatar',
+    ]; // "fields" must declear in every sub class of Model.
 
-    constructor(data) {
+    private first_name?: string;
+    private last_name?: string;
+    private email?: string;
+    private avatar?: string;
+
+    // Contructor method needed in every sub class of Model
+    public constructor(data: any) {
       super(data);
       this.fields = User.fields;
     }
 
-    getManager() {
+    // getManager method needed in every sub class of Model
+    protected getManager(): any {
       return User.objects;
+    }
+
+    public getId() {
+      return this.id;
+    }
+
+    public getFirstName() {
+      return this.first_name;
+    }
+
+    public getLastName() {
+      return this.last_name;
+    }
+
+    public getEmail() {
+      return this.email;
+    }
+
+    public getAvatar() {
+      return this.avatar;
     }
   }
   ```
 
 - Configuration
 
-  ```javascript
+  ```typescript
   // The configuration will effect gobally
   request.Http.defaultConfig = {
-    baseURL: 'https://jsonplaceholder.typicode.com',
+    baseURL: 'https://reqres.in/api',
     header: {
       // http header here.
     },
@@ -72,10 +103,10 @@ http
 
 - Fetch data(list)
 
-  ```javascript
+  ```typescript
   User.objects
-    .filter({username: 'Bret'})
-    .then((response) => {
+    .filter({first_name: 'Lindsay', last_name: 'Ferguson'})
+    .then((resultSet: models.ResultSet<any>) => {
       console.log('Fetch users success', resultSet);
       // resultSet is a list of User Model objects.
     })
@@ -84,9 +115,9 @@ http
     });
   ```
 
-  The above line will make a request to '`{baseURL}/{model_name}s/`' (https://jsonplaceholder.typicode.com/users/). This URL is configureable by overiding a method in `User Model` class as bellow:
+  The above line will make a request to '`{baseURL}/{model_name}s/`' (https://reqres.in/api/users/). This URL is configureable by overiding a method in `User Model` class as bellow:
 
-  ```javascript
+  ```typescript
     public static getResourceURL(): any {
       return 'custom/url/here'; // ex: '/api/profile' or 'https://example.com/api/profile'
     }
@@ -94,7 +125,7 @@ http
 
 - Fetch data(signle resource)
 
-  ```javascript
+  ```typescript
   User.objects
     .get({id: 7})
     .then((user) => {
@@ -107,8 +138,8 @@ http
 
 - POST to create a signle resource
 
-  ```javascript
-  const newUser = await User.objects.create({
+  ```typescript
+  newUser = await User.objects.create({
     email: 'lindsay.ferguson@reqres.in',
     first_name: 'Lindsay',
     last_name: 'Ferguson',
@@ -119,7 +150,7 @@ http
 
 - PUT to update a signle resource
 
-  ```javascript
+  ```typescript
   newUser.email = 'new.email@example.com';
   newUser.save().then((updatedUser) => {
     console.log('Updated', updatedUser);
@@ -129,7 +160,7 @@ http
 
 - DELETE a singole resource
 
-  ```javascript
+  ```typescript
   newUser
     .delete()
     .then((result: any) => {
@@ -141,7 +172,7 @@ http
   ```
 
 - GET count resource
-  ```javascript
+  ```typescript
   User.objects
     .count()
     .then((result: any) => {
@@ -156,41 +187,39 @@ http
 
 #### 3-1. Using your own Manager class
 
-- Create a file `UserManager.js`
+- Create a file `UserManager.ts`
 
-  ```javascript
+  ```typescript
   import {models} from 'takeo';
 
   export class UserManager extends models.Manager {
     // Override this method to transform response data to Model object
-    transformResponseToObject(responseData) {
+    protected transformResponseToObject(responseData: any) {
       const resData = JSON.parse(responseData);
       return new this.model(resData.data);
     }
 
     // Override this method to transform response data to list of Model objects
-    transformResponseToList(responseData) {
+    protected transformResponseToList(responseData: any) {
       return super.transformResponseToList(responseData);
     }
 
-    // Add your cusutom function to model manager
-    // Calling: User.objects.yourCustomFunction()
-    yourCustomFunction() {
+    public myFunction() {
       // Your code here.
     }
   }
   ```
 
-- Using `UserManager` as instead of default Manager class within your model class - `User.js`
+- Using `UserManager` as instead of default Manager class within your model class - `User.ts`
 
-  ```javascript
+  ```typescript
   import {UserManager} from './UserManager';
 
   export class User extends models.Model {
-    static objects = new UserManager(User);
-    static fields= ['id', 'email', 'first_name', 'last_name', 'avatar']
+    public static objects: UserManager = new UserManager(User);
+    public static fields: string[] = ['id', 'email', 'first_name', 'last_name', 'avatar']
     ...
-    getManager() {
+    protected getManager(): any {
         return User.objects;
     }
     ...
@@ -198,13 +227,13 @@ http
   ```
 
 - Calling a custom function of your `MyManager`
-  ```javascript
-  User.objects.yourCustomFunction();
+  ```typescript
+  User.objects.myFunction();
   ```
 
 #### 3-2. Custom request config
 
-```javascript
+```typescript
 const user = await User.objects.filter(
   {email: 'email@example.com'},
   {
